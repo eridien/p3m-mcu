@@ -79,6 +79,7 @@ uint8 menuLines[screenCnt][6] = {
     mn4Str,
     pressSqrStr,
     },
+   
    {camCtrlScrn,
     cc1Str,
     lightsStr,
@@ -87,7 +88,15 @@ uint8 menuLines[screenCnt][6] = {
     pressSqrStr,
     },
 
-   {pasteScreenStr, 
+   {aboutP3mStr,
+    ap1Str,      
+    ap2Str,      
+    ap3Str,      
+    ap4Str,      
+    pressSqrStr,
+    },
+    
+    {pasteScreenStr, 
     posSyrStr,
     extRetStr,
     lightsStr,
@@ -167,10 +176,11 @@ void initScreens() {
 }
 
 char *menuLine(uint8 line){
-  if(menuLines[curScreen][line] < firstOptionCode)
-    return romStr(menuLines[curScreen][line]);
+  uint8 strIdx = menuLines[curScreen][line];
+  if(strIdx < firstOptionCode)
+    return romStr(strIdx);
   else
-    return optionStr(menuLines[curScreen][line]);
+    return optionStr(strIdx);
 }
 
 void drawScreen(bool cursorOnly) {
@@ -241,7 +251,7 @@ const uint8 parentMenu[menuCnt] = {
 
 const uint8 menuSelScreen[menuCnt][menuLineCnt] = {
   {pasteScreen, pickScreen, inspectScreen, settingsMenu}, // mainMenu
-  {pasteSetMenuStr},                                    // settingsMenu
+  {pasteSetMenuStr},                                      // settingsMenu
 };
 
 uint8 defCursByMenu[menuCnt];

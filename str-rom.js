@@ -31,7 +31,8 @@ hdrTxt += "#define eol " + eol + "\n\n";
 hdrTxt += "enum string_names {\n";
 hdrTxt += "";
 
-offsets  = "const uint16 strRomOfs[] = {\n";
+//offsets  = "const uint16 strRomOfs[] = {\n"; // doesn't work from rom
+offsets  = "uint16 strRomOfs[] = {\n";
         
 asm =  "PSECT stringsromsect,class=CODE,local,delta=2\n";
 asm += "GLOBAL _stringsrom\n";
@@ -46,8 +47,9 @@ for(lineIdx = 0; lineIdx < lines.length; lineIdx++) {
    if(line.length === 0 || line[0] === '#') continue;
       
    offsets += "  " + romOfs + ",\n";
-
-   parts = /^(\S*)\s*"(.*)"$/.exec(line);
+   parts = /^(\S*)\s*"(.*)"\s*$/.exec(line);
+   if(!parts)
+     console.log(line);
    name = parts[1];
    str  = parts[2];
    

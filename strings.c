@@ -8,7 +8,7 @@ extern const uint16 stringsrom;
 uint16 stringsromAddr;
  
 void initStringsRom() {
-  stringsromAddr = (uint16) &stringsrom;
+  stringsromAddr = ((uint16) &stringsrom) & 0x7fff;
 }
 
 char glblRomString[MAX_ROMSTR_SIZE];

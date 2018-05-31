@@ -77,6 +77,13 @@ focusStr		  "\s\q+ \b\e Focus"
 zoomStr           "\s\q+ \e\a Zoom"
 #pressSqrStr	  "           (Press\s\q)"
 
+aboutP3mStr       "ABOUT P3M"
+ap1Str            "V1.0 by eridien."
+ap2Str            "Software is open-" 
+ap3Str            "source at github:"
+ap4Str            "eridien/p3m-mcu."
+#pressSqrStr	  "           (Press\s\q)"
+
 pasteScreenStr    "PASTE MODE"
 posSyrStr		  "\a\e Position Syringe"
 extRetStr		  "\e\a Extrude/Retract"

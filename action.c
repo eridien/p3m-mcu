@@ -16,7 +16,7 @@
 #define cameraAction 200
 #define menuAction   201
 
-uint8 actionTable[10][5] = {
+uint8 rockerActionTbl[10][5] = {
   {cameraAction,  lightsAction,focusAction,         zoomInAction,zoomOutAction},
   {menuAction,    cursorUpAction,cursorDownAction,  escMenuAction,okMenuAction},
   {pasteScreen,   syringeInAction,syringeOutAction, extrudeAction,retractAction},
@@ -134,9 +134,11 @@ void handleHomeSwUpDwn(bool swUp) {
     }
     else if(!cameraMode) {
       switch (curScreen) {
-        case mainMenu:  doAction(scrOfs+helpMenuScrn);  break;
+        case mainMenu:      doAction(scrOfs+helpMenuScrn);  break;
         case helpMenuScrn:  doAction(scrOfs+helpMenu2Scrn); break;
-        case helpMenu2Scrn: doAction(scrOfs+menuNavScrn); break;
+        case helpMenu2Scrn: doAction(scrOfs+menuNavScrn);   break;
+        case menuNavScrn:   doAction(scrOfs+camCtrlScrn);   break;
+        case camCtrlScrn:   doAction(scrOfs+aboutScrn);     break;
         default: doAction(scrOfs+mainMenu);
       }
     }
@@ -146,8 +148,8 @@ void handleHomeSwUpDwn(bool swUp) {
 
 void doRockerAction(uint8 actMode, uint8 swIdx) {
   for(int tblIdx=0; tblIdx < 5; tblIdx++) {
-    if(actionTable[tblIdx][0] == actMode) {
-       doActionSw(actionTable[tblIdx][swIdx-2+1], swIdx);  
+    if(rockerActionTbl[tblIdx][0] == actMode) {
+       doActionSw(rockerActionTbl[tblIdx][swIdx-2+1], swIdx);  
        return;
     }
   }

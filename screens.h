@@ -28,6 +28,7 @@ enum menusAndScreens {
   helpMenu2Scrn,         
   menuNavScrn,         
   camCtrlScrn,
+  aboutScrn,
 
   pasteScreen,       
   pickScreen ,       

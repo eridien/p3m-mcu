@@ -3,9 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/mnt/dev/p3/pic/p3mmcu/main.c</file>
             <file>file:/mnt/dev/p3/pic/p3mmcu/action.c</file>
             <file>file:/mnt/dev/p3/pic/p3mmcu/screens.c</file>
+            <file>file:/mnt/dev/p3/pic/p3mmcu/i2c.c</file>
+            <file>file:/mnt/dev/p3/pic/p3mmcu/strings.txt</file>
+            <file>file:/mnt/dev/p3/pic/p3mmcu/screens.h</file>
+            <file>file:/mnt/dev/p3/pic/p3mmcu/action.h</file>
         </group>
     </open-files>
 </project-private>
