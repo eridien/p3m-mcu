@@ -1,11 +1,9 @@
 #ifndef BMOTOR_H
 #define	BMOTOR_H
 
-#define bmotPinsB 0x79   // set all motor pins to output (except fault)
-#define bmotPinsC 0xe0   // set to output
-#define resetLAT  LATB6
-#define faultLAT  LATB7
-#define faultTRIS TRISB7
+#define bmotPinsB 0x39   // set all motor pins to output
+#define bmotPinsC 0xf0   // set to output
+#define resetLAT  LATC4
 
 
 enum bmotIdx {

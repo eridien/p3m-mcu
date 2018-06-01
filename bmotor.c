@@ -9,8 +9,6 @@ void bmotorInit() {
   // all big motor pins are outputs
   TRISB = TRISB & ~bmotPinsB;
   TRISC = TRISC & ~bmotPinsC;
-
-  faultTRIS = 0;
 }
 
 volatile struct bmotStateStruct bmotState[3];
