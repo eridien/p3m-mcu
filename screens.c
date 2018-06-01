@@ -233,20 +233,33 @@ void drawScreen(bool cursorOnly) {
 
 const uint8 cursorLines[] = {
   4,  // mainMenu
-  3,  // settingsMenu
+  5,  // settingsMenu
   4,  // pasteSettingsMenu
+  4,  // calMenu,
+  2,  // pasteSetMenu, 
+  2,  // pickSetMenu,
+  2,  // turboSetMenu,
+  1,  // btnSetMenu,
 };
 
 const uint8 cursorDist[] = {
   1,  // mainMenu
   1,  // settingsMenu
-  2,  // pasteSettingsMenu
+  1,  // calMenu,
+  2,  // pasteSetMenu, 
+  2,  // pickSetMenu,
+  2,  // turboSetMenu,
+  2,  // btnSetMenu,
 };
 
 const uint8 parentMenu[menuCnt] = {
   mainMenu,      // mainMenu
-  mainMenu,      // settingsMenu
-  settingsMenu,  // pasteSettingsMenu
+  mainMenu,      // settingsMenu  
+  settingsMenu,  // calMenu,
+  settingsMenu,  // pasteSetMenu, 
+  settingsMenu,  // pickSetMenu,
+  settingsMenu,  // turboSetMenu,
+  settingsMenu,  // btnSetMenu,
 };
 
 const uint8 menuSelScreen[menuCnt][menuLineCnt] = {
