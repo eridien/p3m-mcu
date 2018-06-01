@@ -7,7 +7,7 @@
 #include "options.h"
 #include "panel.h"
 
-uint8 menuLines[screenCnt][6] = {
+const uint8 menuLines[screenCnt][6] = {
    {mainMenuStr, 
     pasteStr,
     pickStr,
@@ -80,7 +80,7 @@ uint8 menuLines[screenCnt][6] = {
     pressSqrStr,
     },
    
-   {camCtrlScrn,
+   {camCtrlStr,
     cc1Str,
     lightsStr,
     focusStr,
