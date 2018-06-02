@@ -10,5 +10,8 @@
 void lgtsInit();
 void chgLights();
 
+void lightsOn();
+void lightsOff();
+
 #endif	/* LIGHTS_H */
 

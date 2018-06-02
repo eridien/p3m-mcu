@@ -49,16 +49,18 @@ chkAction:
   switch (action) {
     case pwrOnAction:
       curScreen = logoScrn;
-      beep(1);
+//      beep(1);
       initCursor();
       logoStartTimeStamp = timer();
       logoShowLogo();
+      lightsOn();
       return;
 
     case pwrOffAction:
       lcdOff(); 
       bmotAllPwrOff();
       smotAllPwrOff();
+      lightsOff();
       curScreen = pwrOffScrn;
       return;
       
