@@ -26,24 +26,24 @@ void lcdInit() {
 	lcdSendCmdByte(0xa8);//--set multiplex ratio(1 to 64)
 	lcdSendCmdByte(0x3f);//--1/64 duty
     
-	lcdSendCmdByte(0xd3);//-set display offset
+	lcdSendCmdByte(0xd3);//-set vertical offset
 	lcdSendCmdByte(0x00);//-not offset
     
 	lcdSendCmdByte(0x8d);//--set Charge Pump enable/disable
 	lcdSendCmdByte(0x14);//--set(0x14) enable
     
-	lcdSendCmdByte(0x40);//--set start line address
+	lcdSendCmdByte(0x40);//--set start line address to 0
     
 	lcdSendCmdByte(0xa6);//--set not inverted black/white
   
-	lcdSendCmdByte(0xC8);//--set vertical not flipped
+	lcdSendCmdByte(0xC8);//--set not rotated immediately (0xc0 is rotated)
     
 	lcdSendCmdByte(0xa4);//  Disable Entire Display On
     
-	lcdSendCmdByte(0xa1);//--set segment re-map 128 to 0
+	lcdSendCmdByte(0xa1);//--set segment re-map 128 to 0 (no horiz flip))
     
 	lcdSendCmdByte(0xda);//--set com pins hardware configuration
-	lcdSendCmdByte(0x12); // 0x12 for 1106?  0x02 for 1306?  --  TODO
+	lcdSendCmdByte(0x12); // 0x12 for 1106?  0x02 for 1306? (causes interlace))
     
 	lcdSendCmdByte(0x81);//--set contrast control register -- BRIGHTNESS
 	lcdSendCmdByte(0xff);
@@ -53,7 +53,7 @@ void lcdInit() {
     
 	lcdSendCmdByte(0xdb);//--set vcomh
 	lcdSendCmdByte(0x40);
-        
+  
  	i2cStopSending();   
 }
 
@@ -122,6 +122,10 @@ void lcdWriteStr(uint16 font, uint8 page, int8 rowOfs, uint8 col,
 void lcdOn() { 
   lcdInit();
   lcdSendCmd(0xaf); 
+  
+  lcdSendCmd(0xC8);//--set not rotated    (immediate)   (kludge for problem)
+  lcdSendCmd(0xA1);//--set not horiz flip (before data) (kludge for problem)
+
 }
 void lcdOff() { 
     lcdSendCmd(0xae); 

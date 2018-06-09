@@ -161,7 +161,7 @@
         <appendMe value="--msgdisable=520,1510  --ROM=default,-1000-1020"/>
       </HI-TECH-LINK>
       <PICkit3PlatformTool>
-        <property key="AutoSelectMemRanges" value="manual"/>
+        <property key="AutoSelectMemRanges" value="auto"/>
         <property key="Freeze Peripherals" value="true"/>
         <property key="SecureSegment.SegmentProgramming" value="FullChipProgramming"/>
         <property key="ToolFirmwareFilePath"
@@ -199,7 +199,7 @@
         <property key="programoptions.testmodeentrymethod" value="VDDFirst"/>
         <property key="programoptions.usehighvoltageonmclr" value="true"/>
         <property key="programoptions.uselvpprogramming" value="false"/>
-        <property key="voltagevalue" value="3.25"/>
+        <property key="voltagevalue" value="5.0"/>
       </PICkit3PlatformTool>
       <PK4Tool>
         <property key="AutoSelectMemRanges" value="manual"/>
