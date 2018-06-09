@@ -1,6 +1,8 @@
 #ifndef LIGHTS_H
 #define	LIGHTS_H
 
+// lights on power-up with switch off TODO
+
 #include "util.h"
 
 #define lgtsI2cAddr   0x41

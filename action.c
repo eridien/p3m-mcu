@@ -32,9 +32,9 @@ uint8 rockerActionTbl[10][5] = {
 
 uint16 logoStartTimeStamp;
 int8 focusDir = 1;
-uint8 glblRockerSwIdx;
 
-void doAction(uint8 action) {
+void doAction(uint8 action, uint8 swIdx) {
+  swIdx -= 2;
 chkAction:
   if(action >= scrOfs) {
     uint8 scrnIdx = action - scrOfs;
@@ -78,17 +78,17 @@ chkAction:
     case focusAction:   
       startSmot(focusMotor, focusDir, 100, 65535);
       focusDir = -focusDir;
-      actionOnSwUp[glblRockerSwIdx] = focusEndAction;
+      actionOnSwUp[swIdx] = focusEndAction;
       break;
     case focusEndAction: stopSmot(focusMotor); break;
       
     case zoomInAction:   
       startBmot(zoomMotor, 1, true, 500, 65535);
-      actionOnSwUp[glblRockerSwIdx] = zoomEndAction;
+      actionOnSwUp[swIdx] = zoomEndAction;
       break;
     case zoomOutAction:   
       startBmot(zoomMotor, 1, false, 500, 65535);
-      actionOnSwUp[glblRockerSwIdx] = zoomEndAction;
+      actionOnSwUp[swIdx] = zoomEndAction;
       break;
     case zoomEndAction: stopBmot(zoomMotor); break;
     
@@ -97,16 +97,33 @@ chkAction:
     case extrudeAction:    beep(1); break;
     case retractAction:    beep(1); break;
     
-    case rotateFwdAction:  beep(1); break;
-    case rotateBakAction:  beep(1); break;
-    case pinchInAction:    beep(1); break;
-    case pinchOutAction:   beep(1); break;
+    case rotateFwdAction: 
+      startBmot(rotateMotor, 4, true, 200, 65535);
+      startBmot(pinchMotor, 4, true, 200, 65535);
+      actionOnSwUp[swIdx] = rotateEndAction;
+      break;
+    case rotateBakAction:
+      startBmot(rotateMotor, 4, false, 200, 65535);
+      startBmot(pinchMotor, 4, false, 200, 65535);
+      actionOnSwUp[swIdx] = rotateEndAction;
+      break;
+    case rotateEndAction: 
+      stopBmot(rotateMotor); 
+      stopBmot(pinchMotor); 
+      break;
+    
+    case pinchInAction: 
+      startBmot(pinchMotor, 4, true, 200, 65535);
+      actionOnSwUp[swIdx] = pinchEndAction;
+      break;
+    case pinchOutAction:
+      startBmot(pinchMotor, 4, false, 200, 65535);
+      actionOnSwUp[swIdx] = pinchEndAction;
+      break;
+    case pinchEndAction: 
+      stopBmot(pinchMotor); 
+      break;
   }
-}
-
-void doActionSw(uint8 action, uint8 swIdx) {
-  glblRockerSwIdx = swIdx - 2;
-  doAction(action);
 }
 
 const uint8 screenByMenuAndLine[menuCnt][menuLineCnt] = {
@@ -119,29 +136,29 @@ bool  cameraMode;
 bool  turboMode;
 uint8 actionOnTurboStart;
 uint8 actionOnTurboEnd;
-uint8 actionOnHoldStart;
+uint8 actionOnHoldStart[6];
 uint8 actionOnSwUp[rockerCount];
 
 void handleHomeSwUpDwn(bool swUp) {
   if(!swUp) {  // switch down
     if(actionOnTurboStart) {
       turboMode = true;
-      doAction(actionOnTurboStart); 
+      doAction(actionOnTurboStart, 0); 
       return;
     }
   } else { // switch up
     if(turboMode) {
       turboMode = false;
-      if(actionOnTurboEnd) doAction(actionOnTurboEnd);
+      if(actionOnTurboEnd) doAction(actionOnTurboEnd, 0); 
     }
     else if(!cameraMode) {
       switch (curScreen) {
-        case mainMenu:      doAction(scrOfs+helpMenuScrn);  break;
-        case helpMenuScrn:  doAction(scrOfs+helpMenu2Scrn); break;
-        case helpMenu2Scrn: doAction(scrOfs+menuNavScrn);   break;
-        case menuNavScrn:   doAction(scrOfs+camCtrlScrn);   break;
-        case camCtrlScrn:   doAction(scrOfs+aboutScrn);     break;
-        default: doAction(scrOfs+mainMenu);
+        case mainMenu:      doAction(scrOfs+helpMenuScrn, 0);  break;
+        case helpMenuScrn:  doAction(scrOfs+helpMenu2Scrn, 0); break;
+        case helpMenu2Scrn: doAction(scrOfs+menuNavScrn, 0);   break;
+        case menuNavScrn:   doAction(scrOfs+camCtrlScrn, 0);   break;
+        case camCtrlScrn:   doAction(scrOfs+aboutScrn, 0);     break;
+        default: doAction(scrOfs+mainMenu, 0);
       }
     }
     cameraMode = turboMode = false;
@@ -151,7 +168,7 @@ void handleHomeSwUpDwn(bool swUp) {
 void doRockerAction(uint8 actMode, uint8 swIdx) {
   for(int tblIdx=0; tblIdx < 5; tblIdx++) {
     if(rockerActionTbl[tblIdx][0] == actMode) {
-       doActionSw(rockerActionTbl[tblIdx][swIdx-2+1], swIdx);  
+       doAction(rockerActionTbl[tblIdx][swIdx-2+1], swIdx);  
        return;
     }
   }
@@ -169,7 +186,7 @@ void handleSwUpDown(uint8 swIdx, bool swUp) {
   } else {                      // switch up
     swHoldWaiting[swIdx] = false;
     if(actionOnSwUp[swIdx-2]) {
-      doAction(actionOnSwUp[swIdx-2]);
+      doAction(actionOnSwUp[swIdx-2], 0);
       actionOnSwUp[swIdx-2] = 0;
     }
   }
@@ -178,14 +195,14 @@ void handleSwUpDown(uint8 swIdx, bool swUp) {
     handleHomeSwUpDwn(swUp);
   
   else if(swIdx == swPwrIdx) {  // power switch
-    if(swUp) doAction(pwrOffAction);
-    else     doAction(pwrOnAction);
+    if(swUp) doAction(pwrOffAction, 0);
+    else     doAction(pwrOnAction, 0);
   } 
   else {                        // rocker switch
     if(swUp) {
       if(turboMode) {
         turboMode = false;
-        if(actionOnTurboEnd) doAction(actionOnTurboEnd);
+        if(actionOnTurboEnd) doAction(actionOnTurboEnd, 0);
       }
       return;
     }
@@ -207,14 +224,14 @@ void handleSwUpDown(uint8 swIdx, bool swUp) {
 void timeoutChk(uint8 swIdx) {
   if((curScreen == logoScrn) && 
           (timer() - logoStartTimeStamp) > LOGO_DUR)
-    doAction(scrOfs + mainMenu);
+    doAction(scrOfs + mainMenu, 0);
   
   else if(swHoldWaiting[swIdx] && 
           (timer() - swDownTimestamp[swIdx]) > optHoldTime) {
     swHoldWaiting[swIdx] = false;
 //    if(swIdx == swHomeIdx) {
-//      if (curScreen == mainMenu) doAction(scrOfs+menuHelp);
+//      if (curScreen == mainMenu) doAction(scrOfs+menuHelp, 0);
 //    } 
-    if(actionOnHoldStart) doAction(actionOnHoldStart);
+    if(actionOnHoldStart[swIdx]) doAction(actionOnHoldStart[swIdx], 0);
   }
 }

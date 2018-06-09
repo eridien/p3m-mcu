@@ -12,7 +12,7 @@ uint8 curLightsVal;
 
 void lgtsInit() {
   i2cSendTwoBytes(lgtsI2cAddr, lgtsConfigCmd, 0); // all outputs
-  lightsOn();
+  lightsOff();
 }
 
 void chgLights() {

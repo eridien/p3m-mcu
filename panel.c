@@ -18,25 +18,25 @@ uint8 debounceCount[switchesCount];
 
 void panelInit() {
     // expander chip setup
-    i2cSendTwoBytes(i2cExpAddr, IOCON,  0x22); // not seq op, no slew, not open-drain, active-high
-    i2cSendTwoBytes(i2cExpAddr, GPIO, 0xff);           // start buzz off, high
-    i2cSendTwoBytes(i2cExpAddr, IODIR, swAllSwMask);   // all switches are input, buzz is output
-    i2cSendTwoBytes(i2cExpAddr, GPINTEN, swAllSwMask); // enable switch pin ints
-    i2cSendTwoBytes(i2cExpAddr, expINTCON, 0);         // pin ints on any change
+    i2cSendTwoBytes(i2cPanelAddr, IOCON,  0x22); // not seq op, no slew, not open-drain, active-high
+    i2cSendTwoBytes(i2cPanelAddr, GPIO, 0xff);           // start buzz off, high
+    i2cSendTwoBytes(i2cPanelAddr, IODIR, swAllSwMask);   // all switches are input, buzz is output
+    i2cSendTwoBytes(i2cPanelAddr, GPINTEN, swAllSwMask); // enable switch pin ints
+    i2cSendTwoBytes(i2cPanelAddr, expINTCON, 0);         // pin ints on any change
     
     curSwitches = swAllSwMask;
 }
 
 uint8 panelReadA() {
-    return i2cReadByte(i2cExpAddr, GPIO);
+    return i2cReadByte(i2cPanelAddr, GPIO);
 }
 
 void panelWriteA(uint8 data) {
-    i2cSendTwoBytes(i2cExpAddr, GPIO, data);
+    i2cSendTwoBytes(i2cPanelAddr, GPIO, data);
 }
 
 uint8 panelSwPinValues() {
-  return (i2cReadByte(i2cExpAddr, INTCAP) & swAllSwMask); 
+  return (i2cReadByte(i2cPanelAddr, INTCAP) & swAllSwMask); 
 }
 
 void switchChk() {
@@ -52,6 +52,6 @@ void switchChk() {
     }
   }
   if((curScreen == pwrOffScrn) && (curSwitches & swPwrMask) == 0) {
-    doAction(pwrOnAction);
+    doAction(pwrOnAction, 0);
   }
 }

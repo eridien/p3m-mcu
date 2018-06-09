@@ -30,8 +30,10 @@ enum actions {
   retractAction,
   rotateFwdAction, 
   rotateBakAction, 
+  rotateEndAction, 
   pinchInAction,
   pinchOutAction,
+  pinchEndAction,
   saveAction,
   abortAction,
   
@@ -46,7 +48,7 @@ extern uint8 actionOnHoldStart;
 
 void timeoutChk(uint8 switchMask);
 void handleSwUpDown(uint8 switchMask, bool swUp);
-void doAction(uint8 action);
+void doAction(uint8 action, uint8 swIdx);
 
 #endif	/* STATE_H */
 

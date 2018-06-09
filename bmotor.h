@@ -7,7 +7,7 @@
 
 
 enum bmotIdx {
-  rotationMotor,  // rstep C5
+  rotateMotor,  // rstep C5
   pinchMotor,     // tstep C6
   zoomMotor,      // sstep C7
 };

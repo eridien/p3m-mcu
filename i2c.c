@@ -52,8 +52,8 @@ void i2cInit() {
   RB1PPS     = 0x17;           // SCL2
   RB2PPS     = 0x18;           // SDA2
 
-  SSP2ADD    = 0x11;         // baud rate 400 khz
-//    SSP2ADD    = 0x44;           // baud rate 100 khz
+  SSP2ADD    = 0x11;           // baud rate 400 khz
+//  SSP2ADD    = 0x44;           // baud rate 100 khz
   SSP2STATbits.CKE   = 1;      // SMBus 2V input
   SSP2CON1bits.SSPM  = 0b1000; // I2C Master mode, clock=FOSC/(4*(SSPxADD+1))
   SSP2CON1bits.SSPEN = 1;      // Enables the serial port

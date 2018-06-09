@@ -1,11 +1,13 @@
 #ifndef EXPANDER_H
 #define	EXPANDER_H
 
+// moving fast between switches dosn't work  TODO
+
 #include "util.h"   
 
 #define swDebounceTime 16  // 2 ms @ 127.2 usecs/tick
 
-#define i2cExpAddr 0x20
+#define i2cPanelAddr 0x20
 
 // reg addresses in expander chip
 #define IODIR     0x00

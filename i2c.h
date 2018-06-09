@@ -4,7 +4,6 @@
 
 #include "main.h"
         
-void i2cHardReset();
 void i2cInit();
 void i2cStartSending(uint8 chipAddr);
 void i2cSendByte(uint8 byte);
