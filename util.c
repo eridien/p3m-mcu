@@ -25,6 +25,24 @@ void utilInit() {
   GIE                 =  1;   // enable all ints
 }
 
+void dly() {
+    int x=1;
+}
+
+void dbg(bool high) {
+  resetLAT = high;
+}
+void dbgCnt(uint8 count) {
+  resetLAT = 0;
+  dly();  dly(); dly(); dly();
+  for (int i=0; i < count; i++) {
+    resetLAT = 1;
+    dly(); 
+    resetLAT = 0;
+  }
+  dly();  dly(); dly(); dly();
+}
+
 // each tick is 1 ms
 uint16 timer() {
   GIE = 0;
@@ -64,15 +82,5 @@ uint16 getRomWord(uint16 addr) {
     NVMADRH = addr >> 8;
     NVMCON1bits.RD = 1;
     return  ((uint16) NVMDATH << 8) | NVMDATL;   
-}
-
-void beep(uint8 count) {
-  for(int i=0; i<count; i++) {
-    panelWriteA(~buzzMask);
-    delayMs(beepMs);
-    panelWriteA(buzzMask);
-    delayMs(100);
-  };
-  delayMs(400);
 }
 

@@ -39,19 +39,33 @@ uint8 panelSwPinValues() {
   return (i2cReadByte(i2cPanelAddr, INTCAP) & swAllSwMask); 
 }
 
+uint16 beepTimestamp;
+bool beeping = false;
+
+void beep() {
+  beepTimestamp = timer();
+  beeping = true;
+  panelWriteA(~buzzMask);
+}
+
+void stopBeep() {
+  panelWriteA(buzzMask);
+  beeping = false;
+}
+
 void switchChk() {
   uint8 swPinValues = panelReadA();
   for(uint8 swIdx = 0; swIdx < switchesCount; swIdx++) {
     uint8 mask = swMask[swIdx];
     uint8 newval = swPinValues & mask;
-    if(newval == (curSwitches & mask)) 
+    if(newval == (curSwitches & mask)) {
       debounceCount[swIdx] = 0;
-    else if(++debounceCount[swIdx] == 5) {
+    } else if(++debounceCount[swIdx] == 5) {
       curSwitches = (curSwitches & ~mask) | newval;
       handleSwUpDown(swIdx, (newval != 0));
     }
   }
-  if((curScreen == pwrOffScrn) && (curSwitches & swPwrMask) == 0) {
+  if((curScreen == pwrOffScrn) && (curSwitches & swPwrMask) == 0)
     doAction(pwrOnAction, 0);
-  }
 }
+

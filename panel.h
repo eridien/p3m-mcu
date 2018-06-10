@@ -31,6 +31,8 @@ enum swIdx {
 #define rockerCount 4
 extern uint8 curSwitches;
 extern uint8 swMask[switchesCount];
+extern bool beeping;
+extern uint16 beepTimestamp;
 
 // switches
 #define swHomeMask     0x01
@@ -49,6 +51,8 @@ uint8 panelReadA();
 void  panelWriteA(uint8 data);
 uint8 panelSwPinValues();
 void  switchChk();
+void  beep();
+void  stopBeep();
 
 #endif	/* EXPANDER_H */
 

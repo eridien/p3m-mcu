@@ -7,10 +7,6 @@
 #define CLK LATB1
 #define SDA LATB2
 
-void dly() {
-    int x=1;
-}
-
 // bit bang a sequence to unlock slaves waiting for clock
 void i2cHardReset() {
   int x;

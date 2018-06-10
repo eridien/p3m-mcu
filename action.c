@@ -49,7 +49,7 @@ chkAction:
   switch (action) {
     case pwrOnAction:
       curScreen = logoScrn;
-//      beep(1);
+//      beep();
       initCursor();
       logoStartTimeStamp = timer();
       logoShowLogo();
@@ -81,7 +81,7 @@ chkAction:
       actionOnSwUp[swIdx] = focusEndAction;
       break;
     case focusEndAction: stopSmot(focusMotor); break;
-      
+    
     case zoomInAction:   
       startBmot(zoomMotor, 1, true, 500, 65535);
       actionOnSwUp[swIdx] = zoomEndAction;
@@ -92,10 +92,10 @@ chkAction:
       break;
     case zoomEndAction: stopBmot(zoomMotor); break;
     
-    case syringeInAction:  beep(1); break;
-    case syringeOutAction: beep(1); break;
-    case extrudeAction:    beep(1); break;
-    case retractAction:    beep(1); break;
+    case syringeInAction:  beep(); break;
+    case syringeOutAction: beep(); break;
+    case extrudeAction:    beep(); break;
+    case retractAction:    beep(); break;
     
     case rotateFwdAction: 
       startBmot(rotateMotor, 4, true, 200, 65535);
@@ -179,10 +179,11 @@ volatile uint16 swDownTimestamp[6];
 
 void handleSwUpDown(uint8 swIdx, bool swUp) {
   if(curScreen == pwrOffScrn && swIdx != swPwrIdx) return;
-  
+
   if(!swUp) {                   // switch down
     swDownTimestamp[swIdx] = timer();
     swHoldWaiting[swIdx]   = true;
+
   } else {                      // switch up
     swHoldWaiting[swIdx] = false;
     if(actionOnSwUp[swIdx-2]) {
@@ -196,7 +197,7 @@ void handleSwUpDown(uint8 swIdx, bool swUp) {
   
   else if(swIdx == swPwrIdx) {  // power switch
     if(swUp) doAction(pwrOffAction, 0);
-    else     doAction(pwrOnAction, 0);
+    else     doAction(pwrOnAction,  0);
   } 
   else {                        // rocker switch
     if(swUp) {
@@ -229,9 +230,9 @@ void timeoutChk(uint8 swIdx) {
   else if(swHoldWaiting[swIdx] && 
           (timer() - swDownTimestamp[swIdx]) > optHoldTime) {
     swHoldWaiting[swIdx] = false;
-//    if(swIdx == swHomeIdx) {
-//      if (curScreen == mainMenu) doAction(scrOfs+menuHelp, 0);
-//    } 
-    if(actionOnHoldStart[swIdx]) doAction(actionOnHoldStart[swIdx], 0);
+    if(actionOnHoldStart[swIdx]) 
+      doAction(actionOnHoldStart[swIdx], 0);
   }
+  else if(beeping && (timer() - beepTimestamp) > beepMs)
+    stopBeep();
 }

@@ -44,7 +44,7 @@ enum actions {
 extern uint8 actionOnSwUp[rockerCount];
 extern uint8 actionOnTurboStart;
 extern uint8 actionOnTurboEnd;
-extern uint8 actionOnHoldStart;
+extern uint8 actionOnHoldStart[6];
 
 void timeoutChk(uint8 switchMask);
 void handleSwUpDown(uint8 switchMask, bool swUp);

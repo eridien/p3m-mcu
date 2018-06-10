@@ -23,10 +23,12 @@ extern volatile uint8 DBG;
 extern volatile uint16 time;
 
 void utilInit();
+void dbg(bool high);
+void dbgCnt(uint8 count);
 uint16 timer();
+void dly();
 void delayMs(uint16 ms);
 uint16 getRomWord(uint16 addr);
-void beep(uint8 count);
 
 #endif	/* UTIL_H */
 
