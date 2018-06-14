@@ -17,8 +17,6 @@ typedef unsigned long uint32;
 extern volatile uint8 DBG;
 #define BP() __builtin_software_breakpoint()
 
-#define beepMs 50
-
 // updated by ints
 extern volatile uint16 time;
 

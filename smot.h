@@ -6,9 +6,9 @@
 #include "util.h"
 
 enum smotIdx {
-  extrudeMotor,
-  pasteMotor,  
   focusMotor,  
+  syringeMotor,  
+  extrudeMotor,
 };
 
 #define smotDirFwd +1

@@ -21,8 +21,7 @@ void panelInit() {
     i2cSendTwoBytes(i2cPanelAddr, IOCON,  0x22); // not seq op, no slew, not open-drain, active-high
     i2cSendTwoBytes(i2cPanelAddr, GPIO, 0xff);           // start buzz off, high
     i2cSendTwoBytes(i2cPanelAddr, IODIR, swAllSwMask);   // all switches are input, buzz is output
-    i2cSendTwoBytes(i2cPanelAddr, GPINTEN, swAllSwMask); // enable switch pin ints
-    i2cSendTwoBytes(i2cPanelAddr, expINTCON, 0);         // pin ints on any change
+    i2cSendTwoBytes(i2cPanelAddr, GPINTEN, 0);           // pin ints off
     
     curSwitches = swAllSwMask;
 }

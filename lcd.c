@@ -55,6 +55,10 @@ void lcdInit() {
 	lcdSendCmdByte(0x40);
   
  	i2cStopSending();   
+
+  
+  lcdSendCmd(0xC8);  //--set not rotated    (immediate)   (kludge for problem)
+  lcdSendCmd(0xA1);//--set not horiz flip (before data) (kludge for problem)
 }
 
 void lcdSendCmd(uint8 cmd) {
@@ -86,8 +90,8 @@ void lcdSendPageBuf() {
 
 void lcdClrPage(uint8 page) {
     lcdSendCmd(0xb0 + page);
-    lcdSendCmd(0x04); // col idx<3:0> -> 0
-    lcdSendCmd(0x10); // col idx<7:4> -> 0
+    lcdSendCmd(0x00); // col idx<3:0> -> 0x00
+    lcdSendCmd(0x10); // col idx<7:4> -> 0x00
     i2cStartSending(i2cLcdAddr);
     i2cSendByte(lcdContDataCtrl);
     for(uint8 i=0; i < 132; i++)
@@ -121,11 +125,10 @@ void lcdWriteStr(uint16 font, uint8 page, int8 rowOfs, uint8 col,
 
 void lcdOn() { 
   lcdInit();
-  lcdSendCmd(0xaf); 
-  
-  lcdSendCmd(0xC8);//--set not rotated    (immediate)   (kludge for problem)
-  lcdSendCmd(0xA1);//--set not horiz flip (before data) (kludge for problem)
-
+  lcdClrAll();
+  lcdSendCmd(0xaf);  // turn display on
+//  lcdSendCmd(0xC8);//--set not rotated    (immediate)   (kludge for problem)
+//  lcdSendCmd(0xA1);//--set not horiz flip (before data) (kludge for problem)
 }
 void lcdOff() { 
     lcdSendCmd(0xae); 

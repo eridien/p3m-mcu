@@ -229,6 +229,8 @@ void drawScreen(bool cursorOnly) {
     font708WriteStr(6, -2, 0, menuLine(4), false);
     font708WriteStr(7,  0, 0, menuLine(5), false);
   }
+  lcdSendCmd(0xC8);//--set not rotated    (immediate)   (kludge for problem)
+  lcdSendCmd(0xA1);//--set not horiz flip (before data) (kludge for problem)
 }
 
 const uint8 cursorLines[] = {

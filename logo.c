@@ -68,15 +68,19 @@ void addBitsToWord(uint16 len) {
 
 void logoShowLogo() {
     lcdClrAll();
+    lcdSendCmd(0xA1);//--set not horiz flip (before data) (kludge for problem)
     initLogo();
     lcdPageBufIdx = page = word = wordIdx = pixel = 0;
+    lcdClrAll();     // kludge for problem
+    lcdSendCmd(0xA1);// set not horiz flip (before data) (kludge for problem)
     lcdSendCmd(0xb0 + page);
-    lcdSendCmd(0x04); // col (low  nibble) => 4
+    lcdSendCmd(0x00); // col (low  nibble) => 11
     lcdSendCmd(0x10); // col (high nibble) => 0
     while(page < 7) {
       uint16 len = getNextLogoRunlen();
       addBitsToWord(len);
       pixel = 1 - pixel;
     }
-    lcdSendCmd(0xaf); 
+    lcdSendCmd(0xC8);  //--set not rotated    (immediate)   (kludge for problem)
+    lcdSendCmd(0xaf);  // turn display on
 }

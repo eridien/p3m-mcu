@@ -6,6 +6,7 @@
 #include "util.h"   
 
 #define swDebounceTime 16  // 2 ms @ 127.2 usecs/tick
+#define beepMs 50
 
 #define i2cPanelAddr 0x20
 
@@ -47,9 +48,6 @@ extern uint16 beepTimestamp;
                         swBotRgtMask|swHomeMask|swPwrMask)
 
 void  panelInit();
-uint8 panelReadA();
-void  panelWriteA(uint8 data);
-uint8 panelSwPinValues();
 void  switchChk();
 void  beep();
 void  stopBeep();

@@ -83,41 +83,51 @@ chkAction:
     case focusEndAction: stopSmot(focusMotor); break;
     
     case zoomInAction:   
-      startBmot(zoomMotor, 1, true, 500, 65535);
+      startBmot(zoomMotor, 0, true, 500, 65535);
       actionOnSwUp[swIdx] = zoomEndAction;
       break;
     case zoomOutAction:   
-      startBmot(zoomMotor, 1, false, 500, 65535);
+      startBmot(zoomMotor, 0, false, 500, 65535);
       actionOnSwUp[swIdx] = zoomEndAction;
       break;
     case zoomEndAction: stopBmot(zoomMotor); break;
     
-    case syringeInAction:  beep(); break;
-    case syringeOutAction: beep(); break;
-    case extrudeAction:    beep(); break;
-    case retractAction:    beep(); break;
+    case syringeInAction:
+      startSmot(syringeMotor, smotDirFwd, 100, 65535);
+      actionOnSwUp[swIdx] = syringeEndAction;
+      break;
+    case syringeOutAction:
+      startSmot(syringeMotor, smotDirBwd, 100, 65535);
+      actionOnSwUp[swIdx] = syringeEndAction;
+    case syringeEndAction: stopSmot(syringeMotor); break;
+
+    case extrudeAction:
+      startSmot(extrudeMotor, smotDirFwd, 100, 65535);
+      actionOnSwUp[swIdx] = extrudeEndAction;
+      break;
+    case retractAction:  
+      startSmot(extrudeMotor, smotDirBwd, 100, 65535);
+      actionOnSwUp[swIdx] = extrudeEndAction;
+    case extrudeEndAction: stopSmot(extrudeMotor); break;
     
     case rotateFwdAction: 
-      startBmot(rotateMotor, 4, true, 200, 65535);
-      startBmot(pinchMotor, 4, true, 200, 65535);
+      startBmot(rotateMotor, 1, true, 400, 65535);
+      startBmot(pinchMotor, 1, true, 400, 65535);
       actionOnSwUp[swIdx] = rotateEndAction;
       break;
     case rotateBakAction:
-      startBmot(rotateMotor, 4, false, 200, 65535);
-      startBmot(pinchMotor, 4, false, 200, 65535);
+      startBmot(rotateMotor, 1, false, 400, 65535);
+      startBmot(pinchMotor, 1, false, 400, 65535);
       actionOnSwUp[swIdx] = rotateEndAction;
       break;
-    case rotateEndAction: 
-      stopBmot(rotateMotor); 
-      stopBmot(pinchMotor); 
-      break;
+    case rotateEndAction: stopBmot(rotateMotor); stopBmot(pinchMotor); break;
     
     case pinchInAction: 
-      startBmot(pinchMotor, 4, true, 200, 65535);
+      startBmot(pinchMotor, 1, true, 400, 65535);
       actionOnSwUp[swIdx] = pinchEndAction;
       break;
     case pinchOutAction:
-      startBmot(pinchMotor, 4, false, 200, 65535);
+      startBmot(pinchMotor, 1, false, 400, 65535);
       actionOnSwUp[swIdx] = pinchEndAction;
       break;
     case pinchEndAction: 
