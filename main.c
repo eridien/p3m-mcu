@@ -65,11 +65,13 @@ void main(void) {
   smotInit();
   bmotorInit();
   
+  startSmot(focusMotor, +1, 100, 65535);
+          
   // main foreground loop
   while(1) {
     // CLRWDT();
-    switchChk();
-    for(uint8 swIdx = 0; swIdx < 6; swIdx++)
-      timeoutChk(swIdx);
+//    switchChk();
+//    for(uint8 swIdx = 0; swIdx < 6; swIdx++)
+//      timeoutChk(swIdx);
   }
 }

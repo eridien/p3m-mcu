@@ -27,14 +27,14 @@ void smotPwrOnOff(uint8 motor, bool on) {
     uint8 tris;
     switch (motor) {
       case extrudeMotor: tris = smoteTris; break;
-      case syringeMotor:   tris = smotpTris; break;
+      case pasteMotor:   tris = smotpTris; break;
       case focusMotor:   tris = smotfTris; break;
     }
     tris = (tris & ~smotPortMask[motor]);
     if(!on) tris = tris | smotPortMask[motor];
     switch (motor) {
       case extrudeMotor: smoteTris = tris; break;
-      case syringeMotor:   smotpTris = tris; break;
+      case pasteMotor:   smotpTris = tris; break;
       case focusMotor:   smotfTris = tris; break;
     }
     smotState[motor].pwrOn = on;
@@ -72,16 +72,16 @@ void smotInt(uint8 motor) {
                  (smotState[motor].phase + pState->dir) & 3;
     uint8 latVal;
     switch (motor) {
-      case extrudeMotor: latVal = smoteLat; break;
-      case syringeMotor:   latVal = smotpLat; break;
-      case focusMotor:   latVal = smotfLat; break;
+      case extrudeMotor:   latVal = smoteLat; break;
+      case pasteMotor:   latVal = smotpLat; break;
+      case focusMotor:     latVal = smotfLat; break;
     }
     latVal = (latVal & ~smotPortMask[motor]) | 
                         smotPortValue[motor][phase];
     switch (motor) {
-      case extrudeMotor: smoteLat = latVal; break;
-      case syringeMotor:   smotpLat = latVal; break;
-      case focusMotor:   smotfLat = latVal; break;
+      case extrudeMotor:   smoteLat = latVal; break;
+      case pasteMotor:   smotpLat = latVal; break;
+      case focusMotor:     smotfLat = latVal; break;
     }
   }
 }

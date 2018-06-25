@@ -93,13 +93,13 @@ chkAction:
     case zoomEndAction: stopBmot(zoomMotor); break;
     
     case syringeInAction:
-      startSmot(syringeMotor, smotDirFwd, 100, 65535);
+      startSmot(pasteMotor, smotDirFwd, 100, 65535);
       actionOnSwUp[swIdx] = syringeEndAction;
       break;
     case syringeOutAction:
-      startSmot(syringeMotor, smotDirBwd, 100, 65535);
+      startSmot(pasteMotor, smotDirBwd, 100, 65535);
       actionOnSwUp[swIdx] = syringeEndAction;
-    case syringeEndAction: stopSmot(syringeMotor); break;
+    case syringeEndAction: stopSmot(pasteMotor); break;
 
     case extrudeAction:
       startSmot(extrudeMotor, smotDirFwd, 100, 65535);
